@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Omega Fitness Gym</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* --- RESET & VARIABLES --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        :root {
+            --primary-color: #ff9800; /* Orange */
+            --dark-bg: #111;
+            --darker-bg: #000;
+            --text-color: #fff;
+            --gray-text: #ccc;
+        }
+
+        body {
+            background-color: var(--dark-bg);
+            color: var(--text-color);
+            overflow-x: hidden;
+        }
+
+        /* --- SCROLLBAR --- */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #222;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-color);
+            border-radius: 5px;
+        }
+
+        /* --- HEADER / NAVBAR --- */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 20px 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 2px solid var(--primary-color);
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 800;
+            color: white;
+            text-transform: uppercase;
+        }
+
+        .logo span {
+            color: var(--primary-color);
+        }
+
+        nav a {
+            font-size: 16px;
+            color: white;
+            text-decoration: none;
+            margin-left: 30px;
+            transition: 0.3s;
+            font-weight: 500;
+        }
+
+        nav a:hover, nav a.active {
+            color: var(--primary-color);
+        }
+
+        .btn {
+            background: var(--primary-color);
+            color: white;
+            padding: 10px 25px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: 0.3s;
+            border: 2px solid var(--primary-color);
+        }
+
+        .btn:hover {
+            background: transparent;
+            color: var(--primary-color);
+        }
+
+        /* --- HERO SECTION --- */
+        #home {
+            width: 100%;
+            min-height: 100vh;
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=1470&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            padding: 0 8%;
+        }
+
+        .hero-content {
+            max-width: 600px;
+        }
+
+        .hero-content h1 {
+            font-size: 55px;
+            line-height: 1.2;
+            margin-bottom: 20px;
+        }
+
+        .hero-content h1 span {
+            color: var(--primary-color);
+            -webkit-text-stroke: 1px white; /* Styling text outline */
+        }
+
+        .hero-content p {
+            color: var(--gray-text);
+            font-size: 18px;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .social-icons a {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            width: 45px;
+            height: 45px;
+            border: 2px solid var(--primary-color);
+            border-radius: 50%;
+            font-size: 20px;
+            color: var(--primary-color);
+            text-decoration: none;
+            margin-right: 15px;
+            transition: 0.3s;
+        }
+
+        .social-icons a:hover {
+            background: var(--primary-color);
+            color: black;
+            box-shadow: 0 0 15px var(--primary-color);
+        }
+
+        /* --- ABOUT SECTION --- */
+        #about {
+            padding: 80px 8%;
+            background: var(--dark-bg);
+            display: flex;
+            align-items: center;
+            gap: 50px;
+            flex-wrap: wrap;
+        }
+
+        .about-img {
+            flex: 1 1 400px;
+        }
+
+        .about-img img {
+            width: 100%;
+            border-radius: 15px;
+            border: 2px solid var(--primary-color);
+            box-shadow: 0 0 20px rgba(255, 152, 0, 0.3);
+        }
+
+        .about-content {
+            flex: 1 1 400px;
+        }
+
+        .heading {
+            font-size: 40px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        .heading span {
+            color: var(--primary-color);
+        }
+
+        .about-content p {
+            font-size: 16px;
+            color: var(--gray-text);
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .about-features {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .feature {
+            display: flex;
+            align-items: center;
+            font-size: 15px;
+            color: white;
+        }
+
+        .feature i {
+            color: var(--primary-color);
+            margin-right: 10px;
+            font-size: 18px;
+        }
+
+        /* --- SERVICES SECTION (NEW) --- */
+        #services {
+            padding: 80px 8%;
+            background: var(--darker-bg);
+            text-align: center;
+        }
+
+        #services .heading {
+            margin-bottom: 60px;
+        }
+
+        .services-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .service-box {
+            background: #1f1f1f;
+            padding: 40px 30px;
+            border-radius: 10px;
+            transition: 0.4s;
+            border-bottom: 3px solid transparent;
+        }
+
+        .service-box:hover {
+            transform: translateY(-10px);
+            border-bottom: 3px solid var(--primary-color);
+        }
+
+        .service-box i {
+            font-size: 50px;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        .service-box h3 {
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+
+        .service-box p {
+            color: var(--gray-text);
+            line-height: 1.6;
+        }
+
+        /* --- TEAM SECTION (NEW) --- */
+        #team {
+            padding: 80px 8%;
+            background: var(--dark-bg);
+            text-align: center;
+        }
+
+        .team-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .team-box {
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+        }
+
+        .team-box img {
+            width: 100%;
+            height: 350px;
+            object-fit: cover;
+            display: block;
+            transition: 0.5s;
+        }
+
+        .team-box:hover img {
+            transform: scale(1.1);
+            filter: brightness(0.7);
+        }
+
+        .team-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 15px;
+            transform: translateY(100px);
+            transition: 0.4s;
+        }
+
+        .team-box:hover .team-info {
+            transform: translateY(0);
+        }
+
+        .team-info h4 {
+            font-size: 20px;
+            color: var(--primary-color);
+        }
+
+        .team-info p {
+            color: white;
+            font-size: 14px;
+        }
+
+        /* --- CONTACT / FOOTER --- */
+        footer {
+            background: #000;
+            padding: 50px 8% 20px;
+            border-top: 1px solid #333;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-col h3 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: white;
+        }
+        
+        .footer-col h3 span { color: var(--primary-color); }
+
+        .footer-col p { color: var(--gray-text); margin-bottom: 10px; }
+        .footer-col a { color: var(--gray-text); text-decoration: none; display: block; margin-bottom: 10px; transition: 0.3s;}
+        .footer-col a:hover { color: var(--primary-color); padding-left: 8px; }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #222;
+            color: #666;
+        }
+
+        /* --- RESPONSIVE MEDIA QUERIES --- */
+        @media (max-width: 991px) {
+            header { padding: 20px 4%; }
+            #home { padding: 0 4%; }
+            .hero-content h1 { font-size: 40px; }
+        }
+
+        @media (max-width: 768px) {
+            header .btn { display: none; } /* Hide Join Button on mobile */
+            
+            #menu-icon {
+                display: block; /* Show hamburger menu later with JS if needed */
+            }
+
+            nav {
+                display: none; /* Simple hiding for now, JS needed for toggle */
+            }
+            
+            /* Mobile Nav Placeholder */
+            nav.active {
+                display: flex;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: #000;
+                padding: 20px;
+            }
+
+            .hero-content h1 { font-size: 35px; }
+            .about-img { order: 2; } /* Image below text on mobile */
+            
+            #about, #services, #team { padding: 60px 4%; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <a href="#" class="logo">Omega<span>Fitness</span></a>
+
+        <nav>
+            <a href="#home" class="active">Home</a>
+            <a href="#about">About</a>
+            <a href="#services">Services</a>
+            <a href="#team">Trainers</a>
+            <a href="#contact">Contact</a>
+        </nav>
+
+        <a href="#contact" class="btn">Join Now</a>
+    </header>
+
+    <section id="home">
+        <div class="hero-content">
+            <h1>Build Your <span>Perfect Body</span> With Pros</h1>
+            <p>Join Omega Fitness Gym and transform your body with professional trainers, modern equipment, and a motivating environment. Your journey starts here.</p>
+            
+            <a href="#about" class="btn">Get Started</a>
+            
+            <div class="social-icons" style="margin-top: 30px;">
+                <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                <a href="#"><i class="fa-brands fa-youtube"></i></a>
+                <a href="#"><i class="fa-brands fa-whatsapp"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <section id="about">
+        <div class="about-img">
+            <img src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?q=80&w=1470&auto=format&fit=crop" alt="Gym Interior">
+        </div>
+
+        <div class="about-content">
+            <h2 class="heading">Why <span>Choose Us?</span></h2>
+            <h3>Safe Bodybuilding & Proper Solutions.</h3>
+            <p>
+                At Omega Fitness, we don't just provide machines; we provide a lifestyle. Our gym is designed to maximize your potential with scientifically proven methods and elite coaching.
+            </p>
+            <p>
+                Whether you want to lose weight, build muscle, or improve endurance, we have the right plan for you.
+            </p>
+
+            <div class="about-features">
+                <div class="feature"><i class="fa-solid fa-dumbbell"></i> Premium Equipment</div>
+                <div class="feature"><i class="fa-solid fa-user-graduate"></i> Expert Trainers</div>
+                <div class="feature"><i class="fa-solid fa-heart-pulse"></i> Cardio Center</div>
+                <div class="feature"><i class="fa-solid fa-bowl-food"></i> Diet Plans</div>
+            </div>
+
+            <a href="#contact" class="btn">Read More</a>
+        </div>
+    </section>
+
+    <section id="services">
+        <h2 class="heading">Our <span>Services</span></h2>
+        
+        <div class="services-container">
+            <div class="service-box">
+                <i class="fa-solid fa-dumbbell"></i>
+                <h3>Weight Lifting</h3>
+                <p>Heavy duty equipment for professional bodybuilders and beginners alike to build massive strength.</p>
+            </div>
+
+            <div class="service-box">
+                <i class="fa-solid fa-person-running"></i>
+                <h3>Cardio & Fitness</h3>
+                <p>Treadmills, ellipticals, and HIIT zones to boost your stamina and burn calories fast.</p>
+            </div>
+
+            <div class="service-box">
+                <i class="fa-solid fa-om"></i>
+                <h3>Yoga & Meditation</h3>
+                <p>Relax your mind and improve flexibility with our daily morning and evening yoga sessions.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="team">
+        <h2 class="heading">Expert <span>Trainers</span></h2>
+        
+        <div class="team-container">
+            <div class="team-box">
+                <img src="https://images.unsplash.com/photo-1567013127542-490d757e51fc?q=80&w=1374&auto=format&fit=crop" alt="Trainer 1">
+                <div class="team-info">
+                    <h4>John Doe</h4>
+                    <p>Muscle Expert</p>
+                </div>
+            </div>
+
+            <div class="team-box">
+                <img src="https://images.unsplash.com/photo-1611672585731-fa1060a7a3c2?q=80&w=1374&auto=format&fit=crop" alt="Trainer 2">
+                <div class="team-info">
+                    <h4>Sarah Smith</h4>
+                    <p>Cardio Specialist</p>
+                </div>
+            </div>
+
+            <div class="team-box">
+                <img src="https://images.unsplash.com/photo-1597452485669-2c7bb5fef90d?q=80&w=1374&auto=format&fit=crop" alt="Trainer 3">
+                <div class="team-info">
+                    <h4>Mike Tyson</h4>
+                    <p>Crossfit Coach</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer id="contact">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h3>Omega<span>Fitness</span></h3>
+                <p>The best place to build your body and mind. Join us today and start your journey.</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                </div>
+            </div>
+
+            <div class="footer-col">
+                <h3>Quick Links</h3>
+                <a href="#home">Home</a>
+                <a href="#about">About Us</a>
+                <a href="#services">Services</a>
+                <a href="#team">Our Team</a>
+            </div>
+
+            <div class="footer-col">
+                <h3>Contact Info</h3>
+                <p><i class="fa-solid fa-location-dot"></i> Street 10, Gulshan Area, City</p>
+                <p><i class="fa-solid fa-phone"></i> +92 300 1234567</p>
+                <p><i class="fa-solid fa-envelope"></i> info@omegafitness.com</p>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>© 2024 Omega Fitness. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
